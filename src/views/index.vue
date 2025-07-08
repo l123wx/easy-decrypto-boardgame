@@ -40,7 +40,14 @@ const showClearConfirmModal = ref<boolean>(false)
 // 加载词语数据和恢复游戏状态
 onMounted(async () => {
   try {
-    const response = await fetch('/words.json')
+    // 修改为使用相对路径，确保在部署环境中能正确加载
+    const response = await fetch('./words.json')
+    
+    // 检查响应状态
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    
     const data = await response.json() as WordsData
     allWords.value = data.words.split(';')
     
@@ -273,7 +280,7 @@ const closeClearConfirmModal = () => {
           
           <div class="modal-footer">
             <button class="btn close-btn" @click="closeHistoryModal">关闭</button>
-            <button class="btn danger-btn" @click="showClearConfirm">清空数据</button>
+            <button v-if="gameHistory.length > 0" class="btn danger-btn" @click="showClearConfirm">清空数据</button>
           </div>
         </div>
       </div>
@@ -473,10 +480,6 @@ h1 {
   font-size: 18px;
   margin-bottom: 20px;
   color: #666;
-}
-
-.close-btn {
-  margin-top: 20px;
 }
 
 .modal-footer {
