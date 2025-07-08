@@ -222,6 +222,8 @@ const closeClearConfirmModal = () => {
       <button class="btn" @click="generateNumber">生成本轮数字</button>
       <button class="btn history-btn" @click="showGameHistory">查看游戏记录</button>
     </div>
+    <a href="https://www.bilibili.com/opus/1033711144020213779/" target="_blank">游戏规则</a>
+
     
     <div v-if="currentRound" class="round-info">
       <div class="current-round">
